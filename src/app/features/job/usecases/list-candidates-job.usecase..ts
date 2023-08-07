@@ -1,4 +1,3 @@
-
 import { Result, Usecase, UsecaseResponse } from "../../../shared/util";
 import { JobRepository } from "../repositories/job.repository";
 
