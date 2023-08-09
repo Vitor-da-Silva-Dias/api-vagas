@@ -1,4 +1,4 @@
-@HOST = http://localhost:8080 
+@HOST = http://localhost:5432 
 
 GET {{HOST}}/candidate HTTP/1.1
 Content-Type: application/json 
