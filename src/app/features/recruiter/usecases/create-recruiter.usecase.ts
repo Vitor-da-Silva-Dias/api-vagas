@@ -16,9 +16,7 @@ export class CreateRecruiterUsecase implements Usecase {
     // id, nome, e-mail(único), senha, nome da empresa.
 
     // 2 - verificar se o user ja existe (email)
-
     const repository = new UserRepository();
-    
     const user = await repository.getByEmail(params.email);
 
     // Se user existe com o mesmo email, retorna erro 400
@@ -36,10 +34,12 @@ export class CreateRecruiterUsecase implements Usecase {
       params.password,
       params.enterpriseName
     );
+
     await repository.create(recruiter);
 
     const cacheRepository = new CacheRepository();
     await cacheRepository.delete("recruiters");
+
     return {
       ok: true,
       message: "Recruiter successfully created",

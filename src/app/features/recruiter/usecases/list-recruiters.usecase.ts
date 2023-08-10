@@ -10,25 +10,24 @@ export class ListRecruitersUsecase implements Usecase {
 
     const cacheResult = await cacheRepository.get("recruiters");
 
-    if(cacheResult){
-      return{
+    if (cacheResult) {
+      return {
         ok: true,
         message: "Recruiters successfully listed in cache",
         data: cacheResult,
         code: 200,
-      }
+      };
     }
 
     const result = await repository.list(UserType.Recruiter);
+    const data = result?.map((recruiter) => recruiter.toJson());
 
-    const data = result?.map((recruiter) => recruiter.toJson())
-
-    await cacheRepository.set("recruiters", data)
+    await cacheRepository.set("recruiters", data);
 
     return {
       ok: true,
       message: "Recruiters successfully listed",
-      data: result?.map((recruiter) => recruiter.toJson()),
+      data,
       code: 200,
     };
   }
