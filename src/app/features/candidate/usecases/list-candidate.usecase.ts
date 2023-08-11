@@ -9,27 +9,29 @@ export class ListCandidateUsecase implements Usecase {
     const repository = new UserRepository();
     const cacheRepository = new CacheRepository();
 
+    // BANCO NÃO RELACIONAL - REDIS
     const cacheResult = await cacheRepository.get("candidates");
 
-    if(cacheResult){
-      return{
+    if (cacheResult) {
+      return {
         ok: true,
         message: "Candidates successfully listed in cache",
         data: cacheResult,
         code: 200,
-      }
+      };
     }
 
+    // BANCO RELACIONAL - PG
     const result = await repository.list(UserType.Candidate);
 
-    const data = result?.map((candidate) => candidate.toJson())
+    const data = result?.map((candidate) => candidate.toJson());
 
-    await cacheRepository.set("candidate", data)
+    await cacheRepository.set("candidates", data);
 
     return {
       ok: true,
       message: "Candidates successfully listed",
-      data: result?.map((candidate) => candidate.toJson()),
+      data,
       code: 200,
     };
   }

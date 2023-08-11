@@ -37,7 +37,6 @@ export class CreateCandidateUsecase implements Usecase {
 
     // 5 - Chama o respository para salva o cara no banco OK
     await repository.create(candidate);
-
     const cacheRepository = new CacheRepository();
     await cacheRepository.delete("candidates");
 
